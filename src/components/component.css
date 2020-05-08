@@ -1,0 +1,136 @@
+body {
+    padding-left: 10px;
+    padding-right: 10px;
+
+}
+
+#link-div {
+    padding-top: 13px;
+    padding-bottom: 13px;
+    display: flex;
+    align-items: center; 
+    margin: auto;
+    text-decoration: none;
+    width: 100%; 
+    text-align: center;
+}
+
+#link {
+    text-decoration: none;
+    font-size: 20px;
+    width: 100%; 
+    text-align: center;
+}
+
+#naver_logo {
+    height: 23px
+}
+
+#open-button {
+    margin: 15px;
+    position: absolute;
+    border: 0px; 
+    background-color: rgba(0,0,0,0); 
+    outline: 0;
+}
+
+#open-button > img {
+    width: 21px;
+    height: 16px;
+}
+
+#close-button {
+    margin: 15px;
+    position: absolute;
+    border: 0px; 
+    background-color: rgba(0,0,0,0); 
+    outline: 0;
+}
+
+#close-button > img {
+    width: 21px;
+    height: 16px;
+}
+
+#menu-bar {
+    position: absolute;
+    margin: 0;
+    padding: 12px 0px 12px 0px;
+    width: 100%;
+    list-style-type: none;
+    border-top: 1px solid rgb(214, 214, 214);
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    transition : .3s ease-in-out;
+    transform : rotateX (-90deg) rotateY (0);
+    transform-origin : 0 0;
+    background-color: white;
+}
+
+#close-button ~ #menu-bar{
+    opacity: 1;
+    visibility: visible;
+}
+
+#menu-bar > li {
+    margin: 0px;
+    line-height: 29px;
+}
+
+#menu-bar > li > a {
+    font-size: 16px;
+    padding: 4px;
+    text-decoration: none;
+    display: block;
+}
+
+footer  {
+    position: static; 
+    bottom: 0;
+    right: 0;
+    left:0;
+    height: 50px; 
+    background-color: white; 
+    align-items: center; 
+    margin: auto;
+    border-top: 1px solid gray;
+  }
+  
+footer > p {
+    width: 100%; 
+    text-align: center;
+}
+
+
+#loading {
+    top: 50%;
+    position: relative;
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid gray; /* Blue */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+    z-Index: 100;
+    text-align: center;
+    margin: auto;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+#loading_background {
+    align-items: center; 
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-Index: 99;
+    background-color: gray;
+    opacity: 0.5;
+}
+
