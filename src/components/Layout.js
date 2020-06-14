@@ -57,9 +57,7 @@ export default function Layout({ children }) {
               <NavLink href="/components/">내 자세 진단하기</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="https://github.com/reactstrap/reactstrap">
-                동영상 카테고리
-              </NavLink>
+              <NavLink href="/videoList/">동영상 카테고리</NavLink>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
