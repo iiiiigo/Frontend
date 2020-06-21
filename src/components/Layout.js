@@ -46,7 +46,7 @@ export default function Layout({ children }) {
   return (
     <span>
       <Navbar color="" light expand="md">
-        <NavbarBrand href="/">
+        <NavbarBrand tag={Link} to="/">
           Posture Correcting Web App
           <img src={logo} alt="menubar" id="menu-img" width="100" />
         </NavbarBrand>
@@ -54,10 +54,14 @@ export default function Layout({ children }) {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink href="/components/">내 자세 진단하기</NavLink>
+              <NavLink tag={Link} to="/forwardNeck">
+                내 자세 진단하기
+              </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/videoList/">동영상 카테고리</NavLink>
+              <NavLink tag={Link} to="/videoList">
+                동영상 카테고리
+              </NavLink>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
