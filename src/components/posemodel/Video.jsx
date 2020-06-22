@@ -5,12 +5,14 @@ import Stats from 'stats.js';
 import {drawBoundingBox, drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI, tryResNetButtonName, tryResNetButtonText, updateTryResNetButtonDatGuiCss} from './demo_util';
 import "./Vidoe.css";
 
+const axios = require('axios');
+
 const videoWidth = 600;
 const videoHeight = 500;
 const stats = new Stats();
 
-export default function Video() {
-
+export default function Posemodel() {
+  const [tempData, setTempData] = React.useState([]);
   async function setupCamera() {
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
       throw new Error(
@@ -94,8 +96,8 @@ export default function Video() {
       guiState.camera = cameras[0].deviceId;
     }
   
-    const gui = new dat.GUI({width: 300});
-  
+    const gui = new dat.GUI({width: 0});
+    dat.GUI.toggleHide();
     let architectureController = null;
     guiState[tryResNetButtonName] = function() {
       architectureController.setValue('ResNet50')
@@ -391,10 +393,23 @@ export default function Video() {
           minPoseConfidence = +guiState.multiPoseDetection.minPoseConfidence;
           minPartConfidence = +guiState.multiPoseDetection.minPartConfidence;
           break;
+          default :
+            break;
       }
-  
+      try{
+        if(poses[0].score){
+          if(poses[0].score > 0.5){
+            setTempData(poses[0].keypoints);
+          console.log(poses[0]);
+          }
+        }
+      }catch{}
+
+
       ctx.clearRect(0, 0, videoWidth, videoHeight);
-  
+      // setTimeout(()=>{
+      //   console.log(poses);
+      // }, 1000);
       if (guiState.output.showVideo) {
         ctx.save();
         ctx.scale(-1, 1);
@@ -455,9 +470,8 @@ export default function Video() {
       info.style.display = 'block';
       throw e;
     }
-    console.log(net)
     setupGui([], net);
-    setupFPS();
+    // setupFPS();
     detectPoseInRealTime(video, net);
   }
   
@@ -469,10 +483,17 @@ export default function Video() {
     bindPage();
   }, [])
   
+  const handleClickSendData = async () => {
+    const data = ['일반 데이터'];
+    console.log(tempData)
+    await axios.post('http://localhost:3001/data', tempData).then(value => {
+      console.log(value);
+    })
+    // await axios.get('http://127.0.0.1:3001')
+  }
 
   return (
     <div>
-        <body>
           <div>
             <div id="info" style={{display:'none'}}>
               </div>
@@ -489,7 +510,7 @@ export default function Video() {
                   <canvas id="output" />
               </div>
           </div>
-        </body>
+          {/* <button onClick={handleClickSendData} >임시 처리 버튼</button> */}
     </div>
   );
 }
