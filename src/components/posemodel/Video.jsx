@@ -4,7 +4,7 @@ import dat from 'dat.gui';
 import Stats from 'stats.js';
 import {drawBoundingBox, drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI, tryResNetButtonName, tryResNetButtonText, updateTryResNetButtonDatGuiCss} from './demo_util';
 import "./Vidoe.css";
-
+import yoga from '../icon/fffff.JPG'
 const axios = require('axios');
 
 const videoWidth = 600;
@@ -493,6 +493,9 @@ export default function Posemodel(props) {
     // await axios.get('http://127.0.0.1:3001')
   }
 
+
+
+  
   return (
     <div style={style}>
           <div id="loading" style={{display:'flex'}}>
