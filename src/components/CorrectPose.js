@@ -12,7 +12,7 @@ import {
   Progress
 } from "reactstrap";
 import move from "../components/icon/move.gif";
-
+import { Posemodel } from './'
 import "./component.css";
 
 export default function Layout({ children }) {
@@ -57,7 +57,8 @@ export default function Layout({ children }) {
               <CardBody>
                 <CardTitle>따라해보세요</CardTitle>
               </CardBody>
-              <img width="100%" src={move} alt="Card image cap" />
+              <Posemodel style={{width: '100%'}}/>
+              {/* <img width="100%" src={move} alt="Card image cap" /> */}
               <CardBody></CardBody>
             </Card>
           </Col>

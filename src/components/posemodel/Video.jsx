@@ -11,7 +11,8 @@ const videoWidth = 600;
 const videoHeight = 500;
 const stats = new Stats();
 
-export default function Posemodel() {
+export default function Posemodel(props) {
+  const {style} = props;
   const [tempData, setTempData] = React.useState([]);
   async function setupCamera() {
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -396,14 +397,14 @@ export default function Posemodel() {
           default :
             break;
       }
-      try{
-        if(poses[0].score){
-          if(poses[0].score > 0.5){
-            setTempData(poses[0].keypoints);
-          console.log(poses[0]);
-          }
-        }
-      }catch{}
+      // try{
+      //   if(poses[0].score){
+      //     if(poses[0].score > 0.5){
+      //       setTempData(poses[0].keypoints);
+      //     console.log(poses[0]);
+      //     }
+      //   }
+      // }catch{}
 
 
       ctx.clearRect(0, 0, videoWidth, videoHeight);
@@ -493,24 +494,16 @@ export default function Posemodel() {
   }
 
   return (
-    <div>
-          <div>
-            <div id="info" style={{display:'none'}}>
-              </div>
-              <div id="loading" style={{display:'flex'}}>
-                  <div className="spinner-text">
-                      Loading PoseNet model...
-                  </div>
-                  <div class="sk-spinner sk-spinner-pulse">
-                </div>
-              </div>
-              <div id='main' style={{display: 'none'}}>
-                  <video id="video" playsinline style={{display: 'none'}}>
-                  </video>
-                  <canvas id="output" />
-              </div>
+    <div style={style}>
+          <div id="loading" style={{display:'flex'}}>
+            <div class="sk-spinner sk-spinner-pulse">
+            </div>
           </div>
-          {/* <button onClick={handleClickSendData} >임시 처리 버튼</button> */}
+          <div id='main' style={{display: 'none', width: '100%'}}>
+              <video id="video" playsinline style={{display: 'none', width: '320px'}}>
+              </video>
+              <canvas id="output" style={{width: '100%'}}/>
+          </div>
     </div>
   );
 }
