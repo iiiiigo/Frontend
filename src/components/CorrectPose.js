@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import { Link } from "react-router-dom";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
@@ -9,14 +10,20 @@ import {
   Card,
   CardBody,
   CardTitle,
-  Progress
+  Progress,
+  Alert
 } from "reactstrap";
 import move from "../components/icon/move.gif";
-import { Posemodel } from './'
+import { Posemodel } from "./";
 import "./component.css";
+import { useCorrectPose } from "../hooks";
 
 export default function Layout({ children }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [{ poseData }, setPoseData] = useCorrectPose();
+
+  if (poseData.falseStack === 2) {
+  }
 
   return (
     <span>
@@ -28,8 +35,8 @@ export default function Layout({ children }) {
           </Col>
           <Col>
             <CircularProgressbar
-              value="44"
-              text={`44%`}
+              value={poseData.trueStack * 20}
+              text={`${poseData.trueStack * 20}%`}
               strokeWidth="20"
               styles={buildStyles({
                 pathColor: "#ff6464",
@@ -46,9 +53,9 @@ export default function Layout({ children }) {
           <Col>
             <Card>
               <CardBody>
-                <CardTitle>목 늘리기 자세</CardTitle>
+                <CardTitle>{poseData.postureName}</CardTitle>
               </CardBody>
-              <img width="100%" src={move} alt="Card image cap" />
+              <img width="538" src={poseData.img} alt="Card image cap" />
               <CardBody></CardBody>
             </Card>
           </Col>
@@ -57,21 +64,22 @@ export default function Layout({ children }) {
               <CardBody>
                 <CardTitle>따라해보세요</CardTitle>
               </CardBody>
-              <Posemodel style={{width: '100%'}}/>
+              <Posemodel style={{ width: "100%" }} />
               {/* <img width="100%" src={move} alt="Card image cap" /> */}
               <CardBody></CardBody>
             </Card>
           </Col>
         </Row>
         <br />
-        <p>
-          양 팔을 들러 90'c 각도를 유지한 채로 날개뼈를 모으고 고개를 들면서 팔
-          안쪽이 당기는 느낌을 받습니다. 10초 유지합니다.
-        </p>
+        <p>{poseData.discription}</p>
         <div>
           <div className="text-center">진행률</div>
           <Progress multi>
-            <Progress bar color="success" value="30"></Progress>
+            <Progress
+              bar
+              color="success"
+              value={poseData.progressPercent}
+            ></Progress>
           </Progress>
         </div>
         <br />
