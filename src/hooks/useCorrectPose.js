@@ -8,8 +8,7 @@ import img5 from "../components/icon/555.gif";
 import forward from "../components/icon/forwardNeck.JPG";
 import { useHistory } from "react-router-dom";
 import { SINGLE_PERSON_INFERENCE_CONFIG } from "@tensorflow-models/posenet/dist/posenet_model";
-const axios = require('axios');
-
+const axios = require("axios");
 
 const staticData = [
   {
@@ -54,6 +53,8 @@ export const useCorrectPose = () => {
   let history = useHistory();
   const [poseData, setPoseData] = useState({
     start: false,
+    color: "primary",
+    text: "왼쪽 영상에 맞게 자세를 취해주세요.",
     index: 0,
     postureName: "목 늘리기 자세",
     img: img1,
@@ -78,32 +79,40 @@ export const useCorrectPose = () => {
     console.log(tmp)
 
     //서버와 연동
+
     if (tmp) {
       setPoseData(value => {
         return {
           ...value,
-          trueStack: value.trueStack + 1
+          trueStack: value.trueStack + 1,
+          falseStack: 0,
+          color: "primary",
+          text: "올바른 동작입니다."
         };
       });
     } else {
       setPoseData(value => {
         return {
           ...value,
-          falseStack: value.falseStack + 1
+          falseStack: value.falseStack + 1,
+          color: "danger",
+          text: "틀린 자세입니다. 자세를 고쳐주세요."
         };
       });
     }
   };
-  const timeTmp = () => {setPoseData(value => {
-    return{
-      ...value, 
-      start: true
-    }
-  })};
+  const timeTmp = () => {
+    setPoseData(value => {
+      return {
+        ...value,
+        start: true
+      };
+    });
+  };
   useEffect(() => {
     if (poseData.start === false) {
       setInterval(timeTmp, 5000);
-    }else{
+    } else {
       if (poseData.index === 4 && poseData.trueStack === 5) {
         history.push("/");
       }
@@ -111,7 +120,7 @@ export const useCorrectPose = () => {
         const tempVar = setInterval(() => {
           goServer();
         }, 2000);
-  
+
         return function cleanup() {
           clearInterval(tempVar);
         };
