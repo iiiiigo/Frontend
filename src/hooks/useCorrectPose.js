@@ -8,8 +8,7 @@ import img5 from "../components/icon/555.gif";
 import forward from "../components/icon/forwardNeck.JPG";
 import { useHistory } from "react-router-dom";
 import { SINGLE_PERSON_INFERENCE_CONFIG } from "@tensorflow-models/posenet/dist/posenet_model";
-const axios = require('axios');
-
+const axios = require("axios");
 
 const staticData = [
   {
@@ -54,6 +53,8 @@ export const useCorrectPose = () => {
   let history = useHistory();
   const [poseData, setPoseData] = useState({
     start: false,
+    color: "primary",
+    text: "왼쪽 영상에 맞게 자세를 취해주세요.",
     index: 0,
     postureName: "목 늘리기 자세",
     img: img1,
@@ -68,36 +69,44 @@ export const useCorrectPose = () => {
   //const [isLoading, setIsLoading] = useState(false);
   const goServer = async () => {
     //서버에 요청 보내고 리턴값 받기
-    console.log(posePosition)
+    console.log(posePosition);
     console.log("처음." + poseData.index + " , " + poseData.trueStack);
-    const tmp = await axios.post('http://localhost:3001/data', posePosition)
+    const tmp = await axios.post("http://localhost:3001/data", posePosition);
     //서버와 연동
+
     if (tmp) {
       setPoseData(value => {
         return {
           ...value,
-          trueStack: value.trueStack + 1
+          trueStack: value.trueStack + 1,
+          falseStack: 0,
+          color: "primary",
+          text: "올바른 동작입니다."
         };
       });
     } else {
       setPoseData(value => {
         return {
           ...value,
-          falseStack: value.falseStack + 1
+          falseStack: value.falseStack + 1,
+          color: "danger",
+          text: "틀린 자세입니다. 자세를 고쳐주세요."
         };
       });
     }
   };
-  const timeTmp = () => {setPoseData(value => {
-    return{
-      ...value, 
-      start: true
-    }
-  })};
+  const timeTmp = () => {
+    setPoseData(value => {
+      return {
+        ...value,
+        start: true
+      };
+    });
+  };
   useEffect(() => {
     if (poseData.start === false) {
       setInterval(timeTmp, 5000);
-    }else{
+    } else {
       if (poseData.index === 4 && poseData.trueStack === 5) {
         history.push("/");
       }
@@ -105,7 +114,7 @@ export const useCorrectPose = () => {
         const tempVar = setInterval(() => {
           goServer();
         }, 2000);
-  
+
         return function cleanup() {
           clearInterval(tempVar);
         };
@@ -122,9 +131,9 @@ export const useCorrectPose = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [poseData]);
 
-  const InputPosePosition = (data) => {
-    setPosePosition({index : poseData.index,...data});
-  }
+  const InputPosePosition = data => {
+    setPosePosition({ index: poseData.index, ...data });
+  };
 
   return [{ poseData, posePosition }, setPoseData, InputPosePosition];
 };

@@ -20,21 +20,26 @@ import { useCorrectPose } from "../hooks";
 
 export default function Layout({ children }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [{ poseData, posePosition }, setPoseData, InputPosePosition] = useCorrectPose();
-
-  if (poseData.falseStack === 2) {
-  }
+  const [
+    { poseData, posePosition },
+    setPoseData,
+    InputPosePosition
+  ] = useCorrectPose();
 
   return (
     <span>
       <hr></hr>
       <Container>
         <Row xs="12">
-          <Col xs="11">
+          <Col xs="7">
             <h1>거북목 교정 스트레칭</h1>
+          </Col>
+          <Col xs="4">
+            <Alert color={poseData.color}>{poseData.text}</Alert>
           </Col>
           <Col>
             <CircularProgressbar
+              id="circle"
               value={poseData.trueStack * 20}
               text={`${poseData.trueStack * 20}%`}
               strokeWidth="20"
@@ -64,7 +69,10 @@ export default function Layout({ children }) {
               <CardBody>
                 <CardTitle>따라해보세요</CardTitle>
               </CardBody>
-              <Posemodel style={{ width: "100%" }} setPosition={InputPosePosition}/>
+              <Posemodel
+                style={{ width: "100%" }}
+                setPosition={InputPosePosition}
+              />
               {/* <img width="100%" src={move} alt="Card image cap" /> */}
               <CardBody></CardBody>
             </Card>
