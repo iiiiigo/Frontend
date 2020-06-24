@@ -255,12 +255,7 @@ export default function Posemodel(props) {
             break;
       }
       try{
-        if(poses[0].score){
-          if(poses[0].score > 0.5){
-            setPosition(poses[0].keypoints);
-          // console.log(poses[0]);
-          }
-        }
+        setPosition(poses[0].keypoints, poses[0].score);
       }catch{}
 
 

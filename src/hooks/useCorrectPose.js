@@ -68,9 +68,15 @@ export const useCorrectPose = () => {
   //const [isLoading, setIsLoading] = useState(false);
   const goServer = async () => {
     //서버에 요청 보내고 리턴값 받기
-    console.log(posePosition)
     console.log("처음." + poseData.index + " , " + poseData.trueStack);
-    const tmp = await axios.post('http://localhost:3001/data', posePosition)
+    let tmp = false;
+    console.log(posePosition.score)
+    if(posePosition.score > 0.5){
+      const data = await axios.post('http://localhost:3001/data', posePosition)
+      tmp = data.data.result
+      }
+    console.log(tmp)
+
     //서버와 연동
     if (tmp) {
       setPoseData(value => {
@@ -122,8 +128,8 @@ export const useCorrectPose = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [poseData]);
 
-  const InputPosePosition = (data) => {
-    setPosePosition({index : poseData.index,...data});
+  const InputPosePosition = (data, score) => {
+    setPosePosition({index : poseData.index, score: score,...data});
   }
 
   return [{ poseData, posePosition }, setPoseData, InputPosePosition];
