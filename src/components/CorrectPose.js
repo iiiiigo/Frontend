@@ -20,7 +20,7 @@ import { useCorrectPose } from "../hooks";
 
 export default function Layout({ children }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [{ poseData }, setPoseData] = useCorrectPose();
+  const [{ poseData, posePosition }, setPoseData, InputPosePosition] = useCorrectPose();
 
   if (poseData.falseStack === 2) {
   }
@@ -64,7 +64,7 @@ export default function Layout({ children }) {
               <CardBody>
                 <CardTitle>따라해보세요</CardTitle>
               </CardBody>
-              <Posemodel style={{ width: "100%" }} />
+              <Posemodel style={{ width: "100%" }} setPosition={InputPosePosition}/>
               {/* <img width="100%" src={move} alt="Card image cap" /> */}
               <CardBody></CardBody>
             </Card>

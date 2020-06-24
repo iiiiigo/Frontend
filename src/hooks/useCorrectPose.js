@@ -8,6 +8,9 @@ import img5 from "../components/icon/555.gif";
 import forward from "../components/icon/forwardNeck.JPG";
 import { useHistory } from "react-router-dom";
 import { SINGLE_PERSON_INFERENCE_CONFIG } from "@tensorflow-models/posenet/dist/posenet_model";
+const axios = require('axios');
+
+
 const staticData = [
   {
     index: 0,
@@ -60,12 +63,15 @@ export const useCorrectPose = () => {
     trueStack: 0,
     falseStack: 0
   });
+  const [posePosition, setPosePosition] = useState([]);
+
   //const [isLoading, setIsLoading] = useState(false);
-  const goServer = () => {
+  const goServer = async () => {
     //서버에 요청 보내고 리턴값 받기
+    console.log(posePosition)
     console.log("처음." + poseData.index + " , " + poseData.trueStack);
+    const tmp = await axios.post('http://localhost:3001/data', posePosition)
     //서버와 연동
-    const tmp = true;
     if (tmp) {
       setPoseData(value => {
         return {
@@ -82,35 +88,43 @@ export const useCorrectPose = () => {
       });
     }
   };
-  const timeTmp = () => {};
+  const timeTmp = () => {setPoseData(value => {
+    return{
+      ...value, 
+      start: true
+    }
+  })};
   useEffect(() => {
     if (poseData.start === false) {
-      setTimeout(timeTmp, 5000);
-      poseData.start = true;
+      setInterval(timeTmp, 5000);
+    }else{
+      if (poseData.index === 4 && poseData.trueStack === 5) {
+        history.push("/");
+      }
+      if (poseData.trueStack < 6) {
+        const tempVar = setInterval(() => {
+          goServer();
+        }, 2000);
+  
+        return function cleanup() {
+          clearInterval(tempVar);
+        };
+      } else {
+        let currentIndex = poseData.index;
+        currentIndex += 1;
+        setPoseData({
+          ...staticData[currentIndex],
+          trueStack: 0,
+          falseStack: 0
+        });
+      }
     }
-    if (poseData.index === 4 && poseData.trueStack === 5) {
-      history.push("/");
-    }
-    if (poseData.trueStack < 6) {
-      const tempVar = setInterval(() => {
-        goServer();
-      }, 2000);
-
-      return function cleanup() {
-        clearInterval(tempVar);
-      };
-    } else {
-      let currentIndex = poseData.index;
-      currentIndex += 1;
-      setPoseData({
-        ...staticData[currentIndex],
-        trueStack: 0,
-        falseStack: 0
-      });
-    }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [poseData]);
 
-  return [{ poseData }, setPoseData];
+  const InputPosePosition = (data) => {
+    setPosePosition({index : poseData.index,...data});
+  }
+
+  return [{ poseData, posePosition }, setPoseData, InputPosePosition];
 };
