@@ -110,16 +110,14 @@ export const useCorrectPose = () => {
     });
   };
   useEffect(() => {
-    if (poseData.start === false) {
-      setInterval(timeTmp, 5000);
-    } else {
-      if (poseData.index === 4 && poseData.trueStack === 5) {
+
+      if (poseData.index === 4 && poseData.trueStack === 10) {
         history.push("/");
       }
-      if (poseData.trueStack < 6) {
+      if (poseData.trueStack < 11) {
         const tempVar = setInterval(() => {
           goServer();
-        }, 2000);
+        }, 1000);
 
         return function cleanup() {
           clearInterval(tempVar);
@@ -133,7 +131,6 @@ export const useCorrectPose = () => {
           falseStack: 0
         });
       }
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [poseData]);
 

@@ -40,8 +40,8 @@ export default function Layout({ children }) {
           <Col>
             <CircularProgressbar
               id="circle"
-              value={poseData.trueStack * 20}
-              text={`${poseData.trueStack * 20}%`}
+              value={poseData.trueStack * 10}
+              text={`${poseData.trueStack * 10}%`}
               strokeWidth="20"
               styles={buildStyles({
                 pathColor: "#ff6464",
