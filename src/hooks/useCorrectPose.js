@@ -71,9 +71,9 @@ export const useCorrectPose = () => {
     //서버에 요청 보내고 리턴값 받기
     console.log("처음." + poseData.index + " , " + poseData.trueStack);
     let tmp = false;
-    console.log(posePosition.score)
-    if(posePosition.score > 0.5){
-      const data = await axios.post('http://localhost:3001/data', posePosition)
+    if(posePosition.score){
+      console.log("score : " + posePosition.score + " index : " + poseData.index)
+      const data = await axios.post('http://localhost:3001/data', {index: poseData.index, ...posePosition})
       tmp = data.data.result
       }
     console.log(tmp)
@@ -110,7 +110,6 @@ export const useCorrectPose = () => {
     });
   };
   useEffect(() => {
-
       if (poseData.index === 4 && poseData.trueStack === 10) {
         history.push("/");
       }
@@ -134,8 +133,10 @@ export const useCorrectPose = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [poseData]);
 
+  console.log(poseData.index)
+
   const InputPosePosition = (data, score) => {
-    setPosePosition({index : poseData.index, score: score,...data});
+    setPosePosition(value => {return {score: score,...data}});
   }
 
   return [{ poseData, posePosition }, setPoseData, InputPosePosition];
