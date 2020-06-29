@@ -3,3 +3,4 @@ export { default as EmployeeUpdate } from "./EmployeeUpdate.jsx";
 export { default as EmployeeCreate } from "./EmployeeCreate.jsx";
 export { default as VideoList } from "./VideoList.jsx";
 export { default as ForwardNeck } from "./ForwardNeck.jsx";
+export { default as Finish } from "./Finish.jsx";

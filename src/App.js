@@ -6,7 +6,8 @@ import {
   EmployeeCreate,
   EmployeeUpdate,
   VideoList,
-  ForwardNeck
+  ForwardNeck,
+  Finish
 } from "./pages";
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/update" component={EmployeeUpdate} />
         <Route path="/videoList" component={VideoList} />
         <Route path="/forwardNeck" component={ForwardNeck} />
+        <Route path="/finish" component={Finish} />
       </Switch>
     </Router>
   );

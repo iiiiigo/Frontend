@@ -56,16 +56,16 @@ export default function Layout({ children }) {
         <br />
         <Row xs="2">
           <Col>
-            <Card>
+            <Card body className="text-center">
               <CardBody>
                 <CardTitle>{poseData.postureName}</CardTitle>
               </CardBody>
-              <img width="538" src={poseData.img} alt="Card image cap" />
+              <img width="500" src={poseData.img} alt="Card image cap" />
               <CardBody></CardBody>
             </Card>
           </Col>
           <Col>
-            <Card>
+            <Card body className="text-center">
               <CardBody>
                 <CardTitle>따라해보세요</CardTitle>
               </CardBody>
@@ -79,15 +79,14 @@ export default function Layout({ children }) {
           </Col>
         </Row>
         <br />
-        <p>{poseData.discription}</p>
+        <Alert color="dark">{poseData.discription}</Alert>
+
         <div>
-          <div className="text-center">진행률</div>
+          <div className="text-center"></div>
           <Progress multi>
-            <Progress
-              bar
-              color="success"
-              value={poseData.progressPercent}
-            ></Progress>
+            <Progress bar color="success" value={poseData.progressPercent}>
+              진행률
+            </Progress>
           </Progress>
         </div>
         <br />
